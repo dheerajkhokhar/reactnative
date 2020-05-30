@@ -1,0 +1,24 @@
+<View style={{ backgroundColor: "dodgerblue", width: "100%", height: landscape ? "100%" : "30%" }}>
+    <Text>Hello</Text>
+</View>;
+{
+    /* <Text>Hello React Native</Text>
+            <TouchableHighlight
+                onPress={() => {
+                    console.log("Clicked");
+                }}
+            >
+                <Image source={{ uri: "https://picsum.photos/200/300", height: 300, width: 200 }} />
+            </TouchableHighlight>
+            <Button
+                color="orange"
+                title="Click me"
+                onPress={() => {
+                    Alert.alert("Title", "Message", [
+                        { text: "Yes", onPress: () => console.log("YES") },
+                        { text: "No", style: "cancel", onPress: () => console.log("No") }
+                    ]);
+                }}
+            /> */
+}
+<Image source={require("./assets/icon.png")} />;
