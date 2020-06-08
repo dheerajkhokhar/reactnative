@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet } from "react-native";
 import ListItem from "../components/ListItem";
 import Screen from "../components/Screen";
-import colors from "../config/colors";
+import defaultStyles from "../config/styles";
 import Icon from "../components/Icon";
 import ListItemSeparatorComponent from "../components/ListItemSeparator";
 import { FlatList } from "react-native-gesture-handler";
@@ -18,14 +18,14 @@ const menuItems = [
         title: "My Listings",
         icon: {
             name: "format-list-bulleted",
-            backgroundColor: colors.primary
+            backgroundColor: defaultStyles.colors.primary
         }
     },
     {
         title: "My Messages",
         icon: {
             name: "email",
-            backgroundColor: colors.secondary
+            backgroundColor: defaultStyles.colors.secondary
         }
     }
 ];
@@ -59,7 +59,10 @@ const MyAccountScreen = () => {
                 />
             </View>
             <View style={styles.container}>
-                <ListItem title="Logout" IconComponent={<Icon name="logout" backgroundColor={colors.yellow}></Icon>} />
+                <ListItem
+                    title="Logout"
+                    IconComponent={<Icon name="logout" backgroundColor={defaultStyles.colors.yellow}></Icon>}
+                />
             </View>
         </Screen>
     );
@@ -67,7 +70,7 @@ const MyAccountScreen = () => {
 
 const styles = StyleSheet.create({
     screen: {
-        backgroundColor: colors.light
+        backgroundColor: defaultStyles.colors.light
     },
     container: {
         marginVertical: 20
