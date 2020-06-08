@@ -4,7 +4,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import defaultStyles from "../config/styles";
 
-function ViewImageScreen(props) {
+const ViewImageScreen = props => {
     return (
         <View style={styles.container}>
             <View style={styles.closeIcon}>
@@ -16,7 +16,7 @@ function ViewImageScreen(props) {
             <Image resizeMode="contain" style={styles.image} source={require("../assets/chair.jpg")} />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     closeIcon: {

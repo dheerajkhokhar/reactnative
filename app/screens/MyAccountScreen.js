@@ -1,10 +1,10 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import ListItem from "../components/ListItem";
+import ListItem from "../components/lists/ListItem";
 import Screen from "../components/Screen";
 import defaultStyles from "../config/styles";
 import Icon from "../components/Icon";
-import ListItemSeparatorComponent from "../components/ListItemSeparator";
+import ListItemSeparatorComponent from "../components/lists/ListItemSeparator";
 import { FlatList } from "react-native-gesture-handler";
 
 const userInfo = {

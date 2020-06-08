@@ -2,10 +2,10 @@ import React from "react";
 import { View, Image, StyleSheet } from "react-native";
 import AppText from "../components/AppText";
 
-import ListItem from "../components/ListItem";
+import ListItem from "../components/lists/ListItem";
 import defaultStyles from "../config/styles";
 
-function ListingDetailsScreen(props) {
+const ListingDetailsScreen = props => {
     return (
         <View>
             <Image style={styles.image} source={require("../assets/jacket.jpg")} />
@@ -18,7 +18,7 @@ function ListingDetailsScreen(props) {
             </View>
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     detailsContainer: {
