@@ -1,17 +1,14 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { connect } from "react-redux";
 import ListItem from "../components/lists/ListItem";
 import Screen from "../components/Screen";
 import defaultStyles from "../config/styles";
 import Icon from "../components/Icon";
 import ListItemSeparatorComponent from "../components/lists/ListItemSeparator";
 import { FlatList } from "react-native-gesture-handler";
-
-const userInfo = {
-    title: "Dheeraj Khokhar",
-    description: "khokhar_dheeraj@yahoo.co.in",
-    image: require("../assets/mosh.jpg")
-};
+import routes from "../navigation/routes";
+import * as actions from "../store/actions";
 
 const menuItems = [
     {
@@ -19,26 +16,29 @@ const menuItems = [
         icon: {
             name: "format-list-bulleted",
             backgroundColor: defaultStyles.colors.primary
-        }
+        },
+        targetScreen: routes.LISTING
     },
     {
         title: "My Messages",
         icon: {
             name: "email",
             backgroundColor: defaultStyles.colors.secondary
-        }
+        },
+        targetScreen: routes.MESSAGES
     }
 ];
 
-const MyAccountScreen = () => {
+const MyAccountScreen = props => {
+    const { navigation, user } = props;
     return (
         <Screen style={styles.screen}>
             <View style={styles.container}>
                 <ListItem
-                    title={userInfo.title}
-                    subTitle={userInfo.description}
-                    image={userInfo.image}
-                    onPress={() => console.log(userInfo)}
+                    title={user.name}
+                    subTitle={user.email}
+                    image={require("../assets/mosh.jpg")}
+                    onPress={() => console.log(user)}
                 />
             </View>
             <View style={styles.container}>
@@ -53,6 +53,7 @@ const MyAccountScreen = () => {
                                 IconComponent={
                                     <Icon name={item.icon.name} backgroundColor={item.icon.backgroundColor} />
                                 }
+                                onPress={() => navigation.navigate(item.targetScreen)}
                             />
                         );
                     }}
@@ -62,6 +63,7 @@ const MyAccountScreen = () => {
                 <ListItem
                     title="Logout"
                     IconComponent={<Icon name="logout" backgroundColor={defaultStyles.colors.yellow}></Icon>}
+                    onPress={() => props.onLogout()}
                 />
             </View>
         </Screen>
@@ -77,4 +79,17 @@ const styles = StyleSheet.create({
     }
 });
 
-export default MyAccountScreen;
+const mapStateToProps = state => {
+    return {
+        user: state.auth.user
+    };
+};
+
+const mapDispatcherToProps = dispatcher => {
+    return {
+        onAuthCheck: () => dispatcher(actions.authCheckState()),
+        onLogout: () => dispatcher(actions.onLogout())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatcherToProps)(MyAccountScreen);

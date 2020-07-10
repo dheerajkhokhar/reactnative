@@ -4,27 +4,27 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import Swipeable from "react-native-gesture-handler/Swipeable";
 
 import AppText from "../AppText";
-import defaultStyles from "../../config/styles";
+import colors from "../../config/colors";
 
 const ListItem = ({ title, subTitle, image, IconComponent, onPress, renderRightActions }) => {
     return (
         <Swipeable renderRightActions={renderRightActions}>
-            <TouchableHighlight underlayColor={defaultStyles.colors.light} onPress={onPress}>
+            <TouchableHighlight underlayColor={colors.light} onPress={onPress}>
                 <View style={styles.container}>
                     {IconComponent}
                     {image && <Image style={styles.image} source={image} />}
                     <View style={styles.detailsContainer}>
-                        <AppText style={styles.title} numberOfLine={1}>
+                        <AppText style={styles.title} numberOfLines={1}>
                             {title}
                         </AppText>
                         {subTitle && (
-                            <AppText style={styles.subTitle} numberOfLine={2}>
+                            <AppText style={styles.subTitle} numberOfLines={2}>
                                 {subTitle}
                             </AppText>
                         )}
                     </View>
+                    <MaterialCommunityIcons color={colors.medium} name="chevron-right" size={25} />
                 </View>
-                <MaterialCommunityIcons color={colors.medium} name="chevron-right" size={25} />
             </TouchableHighlight>
         </Swipeable>
     );
@@ -32,14 +32,14 @@ const ListItem = ({ title, subTitle, image, IconComponent, onPress, renderRightA
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "row",
         alignItems: "center",
+        flexDirection: "row",
         padding: 15,
-        backgroundColor: defaultStyles.colors.white
+        backgroundColor: colors.white
     },
     detailsContainer: {
-        marginLeft: 10,
         flex: 1,
+        marginLeft: 10,
         justifyContent: "center"
     },
     image: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         borderRadius: 35
     },
     subTitle: {
-        color: defaultStyles.colors.medium
+        color: colors.medium
     },
     title: {
         fontWeight: "500"

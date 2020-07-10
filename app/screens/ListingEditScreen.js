@@ -1,16 +1,21 @@
 import React from "react";
 import { StyleSheet, Image, View } from "react-native";
+import { connect, useSelector, useDispatch } from "react-redux";
+import * as actions from "../store/actions";
 import * as Yup from "yup";
-
+import UploadScreen from "./UploadScreen";
 import Screen from "../components/Screen";
 import { AppForm, AppFormField, SubmitButton, AppFormPicker } from "../components/forms";
 import CategoryPickerItem from "../components/CategoryPickerItem";
+import AppFormImagePicker from "../components/forms/AppFormImagePicker";
+import useLocation from "../hooks/useLocation";
 
 const validationSchema = Yup.object().shape({
     title: Yup.string().required().min(1).label("Title"),
     price: Yup.number().required().min(1).max(10000).label("Price"),
     description: Yup.string().label("Description"),
-    category: Yup.object().required().nullable().label("Category")
+    category: Yup.object().required().nullable().label("Category"),
+    images: Yup.array().min(1, "Please select atleast 1 image")
 });
 const categories = [
     {
@@ -68,19 +73,35 @@ const categories = [
         value: 9
     }
 ];
+
 const ListingEditScreen = props => {
+    const { isUploaded, uploading, uploadProgress, error } = props;
+    const location = useLocation();
+    let formReset = null;
+    const handleSubmit = (listing, { resetForm }) => {
+        props.addListing(listing);
+        resetForm();
+    };
+
+    const formUploader = () => {
+        // formReset();
+        props.resetListing();
+    };
     return (
         <Screen style={styles.container}>
+            <UploadScreen onDone={() => formUploader()} progress={uploadProgress} visible={uploading} />
             <AppForm
                 initialValues={{
                     title: "",
                     price: "",
                     description: "",
-                    category: null
+                    category: null,
+                    images: []
                 }}
-                onSubmit={values => console.log(values)}
+                onSubmit={handleSubmit}
                 validationSchema={validationSchema}
             >
+                <AppFormImagePicker name="images" />
                 <AppFormField maxLength={255} name="title" placeholder="Title" />
                 <AppFormField keyboardType="numeric" maxLength={8} name="price" placeholder="Price" width={120} />
                 <AppFormPicker
@@ -117,4 +138,21 @@ const styles = StyleSheet.create({
     }
 });
 
-export default ListingEditScreen;
+const mapStateToProps = state => {
+    return {
+        uploading: state.listings.uploading,
+        isUploaded: state.listings.isUploaded,
+        uploadProgress: state.listings.uploadProgress,
+        error: state.listings.error,
+        loading: state.listings.loading
+    };
+};
+
+const mapDispatcherToProps = dispatcher => {
+    return {
+        addListing: listing => dispatcher(actions.addListing(listing)),
+        resetListing: () => dispatcher(actions.resetListing())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatcherToProps)(ListingEditScreen);
