@@ -20,7 +20,7 @@ const instance = create({
     baseURL: "http://192.168.0.106:9005/api"
 });
 
-apiClient.addAsyncRequestTransform(async request => {
+instance.addAsyncRequestTransform(async request => {
     const authToken = await authStorage.getToken();
     if (!authToken) return;
     request.headers["x-auth-token"] = authToken;
